@@ -25,9 +25,9 @@ const siteConfig = {
   // 1. DEALERSHIP IDENTITY
   // ==================================================================
   dealership: {
-    name: "Dealership Name", // Public-facing display name
-    legalName: "Dealership Legal Name LLC", // Footer copyright line
-    slug: "dealership-slug", // URLs, file naming, analytics labels
+    name: "GT1 Motors", // Public-facing display name
+    legalName: "GT1 Motors", // Footer copyright line
+    slug: "gt-1-motors", // URLs, file naming, analytics labels
   },
 
   // ==================================================================
@@ -47,12 +47,20 @@ const siteConfig = {
     phone: "+20 100 000 0000", // Optional, omit from UI if not provided
     email: "info@dealership.com", // Optional, omit from UI if not provided
     address: {
-      line1: "Showroom address line 1",
-      line2: "District, City",
+      line1: "Sheikh Zayed Central axis", //
+      line2: "October,Giza Governorate",
       country: "Egypt",
-      mapEmbedUrl: "", // Google Maps iframe src
-      lat: null,
-      lng: null,
+      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.720032003643!2d31.002221156164634!3d30.016194388216128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14585b00ccb34af9%3A0xa61dd018f20c205d!2sGT1%20MOTORS!5e0!3m2!1sen!2seg!4v1785940089286!5m2!1sen!2seg", // Google Maps iframe src
+      lat: 30.01620084022301,
+      lng: 31.004386551585814
+    },
+    address: {
+      line1: "fifth settlment, Rahim Square", //
+      line2: "New Cairo 1, Cairo Governorate",
+      country: "Egypt",
+      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.046464816783!2d31.461142199999998!3d30.035524799999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458230ed4c3683f%3A0xa93b30e10e2a5025!2sGT1%20MOTORS!5e0!3m2!1sen!2seg!4v1785940000321!5m2!1sen!2seg", // Google Maps iframe src
+      lat: 30.035752358594014,
+      lng: 31.4615284380886
     },
   },
 
@@ -60,9 +68,9 @@ const siteConfig = {
   // 3. SOCIAL LINKS — only render icons/links for non-empty values
   // ==================================================================
   social: {
-    instagram: "",
+    instagram: "gt1motors",
     tiktok: "",
-    facebook: "",
+    facebook: "GT1 Motors",
     whatsappChannel: "",
   },
 
@@ -80,22 +88,17 @@ const siteConfig = {
   // ==================================================================
   brand: {
     colors: {
-      primary: "#0A0A0A",
-      secondary: "#1A1A1A",
-      accent: "#8A6D14", // Chosen deliberately: 4.91:1 contrast against
-      // white (WCAG AA needs 4.5:1) — the original placeholder
-      // (#C9A227) actually FAILED this at 2.42:1, caught by
-      // scripts/validate-config.mjs during a real dry-run build. Real
-      // projects will replace this anyway, but the starter kit's own
-      // example should demonstrate a value that actually passes.
-      background: "#0A0A0A",
-      surface: "#141414",
-      textPrimary: "#F5F5F5",
-      textMuted: "#A0A0A0",
+      primary: "#0B0A09",         // ink
+      secondary: "#242A33",       // dark-slate
+      accent: "#B3182B",          // brand-red (4.5+ contrast against white)
+      background: "#0B0A09",      // ink
+      surface: "#38424D",         // mid-slate
+      textPrimary: "#F7F4EE",     // off-white
+      textMuted: "rgba(247,244,238,0.55)", // grey
     },
     logo: {
-      wordmarkText: "", // If no logo image, render as styled text using brand fonts
-      imageSrc: "", // Path in /public, takes priority over wordmarkText if set
+      wordmarkText: "GT1 MOTORS", // If no logo image, render as styled text using brand fonts
+      imageSrc: "/gt1-logo.png", // Path in /public, takes priority over wordmarkText if set
       faviconSrc: "/favicon.ico",
     },
   },
@@ -105,9 +108,9 @@ const siteConfig = {
   //    robots.js and sitemap.js
   // ==================================================================
   seo: {
-    title: "Dealership Name | Premium Cars in Egypt",
+    title: "GT1 Motors",
     description: "Short SEO meta description, 150-160 characters ideally.",
-    keywords: ["luxury cars Egypt", "premium dealership Cairo"],
+    keywords: ["car Imports", "premium dealership zayed", "exotic cars", "performance cars"],
     siteUrl: "https://www.dealership-domain.com", // No trailing slash
     ogImage: "/og-image.jpg", // Path in /public, 1200x630 recommended
     locale: "en_EG",
@@ -145,6 +148,22 @@ const siteConfig = {
   //    GOOGLE_SHEETS_ENDPOINT (see .env.example).
   // ==================================================================
   leadCapture: {
+    // Dropdown options for the "Interested In" field on the lead
+    // form (components/sections/Contact.jsx). REAL per-dealership
+    // list — edit to match what this specific dealership actually
+    // offers. Order here is the order shown in the dropdown. Kept
+    // generic in lib/validators.js (any non-empty string passes
+    // server-side validation) — the real constraint is that the
+    // dropdown itself only offers these options, so a visitor can't
+    // submit something outside this list through the real form.
+    services: [
+      "Buying a vehicle",
+      "Trade-in / Selling",
+      "Financing",
+      "Service & Maintenance",
+      "General Inquiry",
+    ],
+
     formEnquiryMessageTemplate:
       "New website enquiry:\nName: {name}\nPhone: {phone}\nMessage: {message}",
   },

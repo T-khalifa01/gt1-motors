@@ -74,18 +74,39 @@ configure here beyond what's already documented in the layout file's
 own header comment (pick real fonts, only request weights that
 actually exist).
 
-## Third-party scripts — already deferred
+## Third-party scripts — deferred as far as each one allows
 
-- GA4: consent-gated (section 14) AND `strategy="afterInteractive"` —
-  never blocks initial render, and often doesn't load at all until the
-  visitor explicitly opts in
-- Sentry: tunneled through `/monitoring`, same-origin, no extra DNS
-  lookup
-- Speed Insights: `strategy` handled internally by the package, loads
-  from same-origin in production
+- **GA4:** consent-gated (section 14) AND `strategy="lazyOnload"` (see
+  `components/ui/AnalyticsLoader.jsx`) — the least aggressive of
+  `next/script`'s loading strategies. Holds the script back until the
+  browser's `load` event fires and the main thread is idle, so it
+  never competes with anything the page itself needs. **Trade-off,
+  accepted deliberately:** a visitor who clicks a WhatsApp button in
+  the first second or two — before `load` fires — won't have that
+  specific click tracked, since `gtag` isn't loaded yet.
+  `trackEvent()` already no-ops safely when `gtag` isn't available (no
+  error, no crash), so this doesn't break anything — it just means
+  very-early interactions go uncounted in GA4. Given the whole point of
+  deferring is to not cost real visitors real load-time performance,
+  this is judged worth it.
+- **Sentry:** tunneled through `/monitoring`, same-origin, no extra DNS
+  lookup. Bundled into the app's own JS via the `@sentry/nextjs`
+  wizard's instrumentation files, not a separate `next/script` tag —
+  not something this project's code controls the loading strategy of
+  directly.
+- **Speed Insights:** loading behavior is handled internally by
+  `@vercel/speed-insights` itself, no public strategy prop exposed to
+  configure — the package is already built for minimal load impact by
+  design.
+- **JSON-LD structured data:** not a script in the performance sense at
+  all — `type="application/ld+json"` is a non-executable MIME type,
+  browsers parse it for crawlers but never run it as JavaScript.
+  Nothing to defer.
 
-Nothing to add here — this list is a confirmation that the
-infrastructure layer already made the right defaults, not a TODO.
+This list is a confirmation that the infrastructure layer makes the
+right call for each script type, not a uniform TODO — some (GA4) had
+a real strategy choice to make, others (Sentry, Speed Insights, JSON-LD)
+genuinely don't expose one or don't need one.
 
 ---
 

@@ -22,11 +22,11 @@ const Input = forwardRef(function Input(
   const fieldId = props.id || props.name;
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1.5">
       {label && (
         <label
           htmlFor={fieldId}
-          className="text-sm font-medium text-text-primary"
+          className="text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-text-muted"
         >
           {label}
         </label>
@@ -36,13 +36,13 @@ const Input = forwardRef(function Input(
         id={fieldId}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${fieldId}-error` : undefined}
-        className={`rounded-md border bg-surface px-4 py-2 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent ${
-          error ? "border-red-500" : "border-secondary"
+        className={`w-full appearance-none rounded-none border bg-white/5 px-4 py-3 font-sans text-[0.85rem] text-text-primary outline-none transition-colors placeholder:text-white/20 focus:border-accent [&:-webkit-autofill]:[-webkit-text-fill-color:#fff] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] ${
+          error ? "border-red-500" : "border-white/10"
         } ${className}`}
         {...props}
       />
       {error && (
-        <span id={`${fieldId}-error`} className="text-sm text-red-500">
+        <span id={`${fieldId}-error`} className="text-[0.7rem] font-medium text-red-500">
           {error}
         </span>
       )}

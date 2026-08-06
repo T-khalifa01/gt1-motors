@@ -201,8 +201,11 @@ Two flows, both click-to-send, no WhatsApp Business API:
    (a country dropdown + local number, combined via
    `parsePhoneNumberFromString()` into a correct E.164 number — this
    properly strips country-specific quirks like a leading trunk `0`,
-   which a naive string concatenation would get wrong). On submit →
-   POST `/api/lead`:
+   which a naive string concatenation would get wrong). Fields: name,
+   phone, **Interested In** (required dropdown, options from
+   `site.config.js`'s `leadCapture.services` — real dealership-specific
+   list, see section 3), message (optional). On submit → POST
+   `/api/lead`:
    - Rejects oversized payloads before parsing (`MAX_BODY_BYTES` guard)
    - Re-validates server-side with the same Zod schema (phone validated
      via `libphonenumber-js/min`'s `isValidPhoneNumber`, expects the

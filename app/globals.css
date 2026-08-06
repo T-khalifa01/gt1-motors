@@ -42,3 +42,33 @@
   --font-display: var(--next-font-display);
   --font-body: var(--next-font-body);
 }
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+}
+
+@keyframes scrollpulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\\[scrollpulse_2\\2s_ease-in-out_infinite\\] {
+    animation: none;
+  }
+}

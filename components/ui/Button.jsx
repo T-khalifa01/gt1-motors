@@ -14,16 +14,6 @@
 
 "use client";
 
-/**
- * @param {object} props
- * @param {"solid"|"outline"} [props.variant]
- * @param {"button"|"submit"} [props.type]
- * @param {boolean} [props.disabled]
- * @param {boolean} [props.loading] - shows a simple loading state, also disables the button
- * @param {() => void} [props.onClick]
- * @param {string} [props.className]
- * @param {import('react').ReactNode} props.children
- */
 export default function Button({
   variant = "solid",
   type = "button",
@@ -37,17 +27,24 @@ export default function Button({
   const isDisabled = disabled || loading;
 
   const variantClasses = isOutline
-    ? "border border-accent text-accent bg-transparent"
-    : "bg-accent text-white";
+    ? "border border-accent text-accent bg-transparent hover:bg-accent/10"
+    : "bg-gradient-to-br from-[#D4293D] via-accent to-[#7E0F1D] text-white shadow-[0_4px_24px_rgba(179,24,43,0.28)] hover:-translate-y-[1px] hover:shadow-[0_8px_28px_rgba(179,24,43,0.32)]";
 
   return (
     <button
       type={type}
       disabled={isDisabled}
       onClick={onClick}
-      className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 ${variantClasses} ${className}`}
+      className={`relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-none p-4 text-[0.7rem] font-bold uppercase tracking-[0.2em] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${variantClasses} ${className}`}
     >
-      {loading ? "Sending…" : children}
+      <span className={loading ? "opacity-0" : "opacity-100"}>
+        {children}
+      </span>
+      {loading && (
+        <span className="absolute inset-0 flex items-center justify-center">
+          Sending…
+        </span>
+      )}
     </button>
   );
 }

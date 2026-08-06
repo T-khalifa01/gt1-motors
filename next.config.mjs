@@ -61,9 +61,13 @@ const speedInsightsDevConnectSrc = isDev
   ? ' https://vitals.vercel-insights.com'
   : '';
 
+// React requires 'unsafe-eval' in development for HMR and error overlays.
+// We strip this out in production to maintain strict CSP security.
+const reactDevEvalSrc = isDev ? " 'unsafe-eval'" : "";
+
 const scriptSrc = gaEnabled
-  ? `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com${speedInsightsDevScriptSrc}`
-  : `script-src 'self' 'unsafe-inline'${speedInsightsDevScriptSrc}`;
+  ? `script-src 'self' 'unsafe-inline'${reactDevEvalSrc} https://www.googletagmanager.com${speedInsightsDevScriptSrc}`
+  : `script-src 'self' 'unsafe-inline'${reactDevEvalSrc}${speedInsightsDevScriptSrc}`;
 
 const connectSrc = gaEnabled
   ? `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com${speedInsightsDevConnectSrc}`
@@ -84,6 +88,7 @@ const csp = [
   `font-src 'self'`, // self-hosted via next/font — no external font CDN needed
   `img-src 'self' data: https:`,
   connectSrc,
+  `frame-src 'self' https://www.google.com`, // this line allows embedng Google Maps
   `object-src 'none'`, // blocks Flash/plugin-based content entirely, no legitimate use here
   `base-uri 'self'`, // prevents <base> tag injection attacks
   `form-action 'self'`, // the lead form only ever submits to this site's own /api/lead

@@ -76,7 +76,8 @@ export default function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleClick}
-      className={`inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium transition-opacity hover:opacity-90 ${variantClasses} ${className}`}
+      // className={`inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium transition-opacity hover:opacity-90 ${variantClasses} ${className}`}
+      className={`inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-br from-[#D4293D] via-accent to-[#7E0F1D] px-6 py-3.5 text-[0.95rem] font-semibold text-white shadow-[0_4px_24px_rgba(179,24,43,0.3)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_32px_rgba(179,24,43,0.5)] md:w-auto ${variantClasses} ${className}`}
     >
       <MessageCircle size={20} />
       {label}

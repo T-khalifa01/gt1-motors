@@ -75,7 +75,7 @@
  * ------------------------------------------------------------------
  */
 
-import { Playfair_Display, Inter } from "next/font/google";
+import { Montserrat, Aleo } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import siteConfig from "@/config/site.config";
 import { isAnalyticsEnabled } from "@/lib/analytics";
@@ -88,16 +88,19 @@ import "./globals.css";
 export const metadata = buildMetadata(siteConfig);
 
 // --- REPLACE PER PROJECT: real font choice + real available weights ---
-const displayFont = Playfair_Display({
+const displayFont = Aleo({
   subsets: ["latin"],
-  weight: ["400", "600", "700"], // only weights this font actually has
-  variable: "--next-font-display",
+  weight: ["300", "400", "500", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-aleo",
+  display: "swap",
 });
 
-const bodyFont = Inter({
+const bodyFont = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--next-font-body",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
+  display: "swap",
 });
 // -----------------------------------------------------------------
 
@@ -108,7 +111,7 @@ export default function RootLayout({ children }) {
   const structuredData = buildLocalBusinessSchema(siteConfig);
 
   return (
-    <html lang={i18n.defaultLocale} dir={i18n.dir}>
+    <html lang={i18n.defaultLocale} dir={i18n.dir} translate="no">
       <body
         className={`${displayFont.variable} ${bodyFont.variable}`}
         style={{

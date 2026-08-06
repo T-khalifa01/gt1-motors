@@ -47,17 +47,17 @@ export default function CookieConsentBanner() {
   if (consent !== null) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 flex flex-col gap-3 border-t border-secondary bg-surface p-4 text-text-primary sm:flex-row sm:items-center sm:justify-between">
-      <p className="text-sm text-text-muted">
-        {/* PLACEHOLDER — needs real legal review before use */}
-        We use analytics cookies to understand how visitors use this
-        site. You can accept or decline.
+    <div class="fixed inset-x-0 bottom-0 z-50 flex flex-col gap-3 border-t border-gray-800 bg-gray-900 p-4 text-white sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-sm text-gray-400">
+        We use analytics cookies to understand how visitors use this site. You can accept or decline.
       </p>
-      <div className="flex shrink-0 gap-3">
-        <Button variant="outline" onClick={() => setConsent("denied")}>
+      <div class="flex shrink-0 gap-3">
+        <button class="rounded-md border border-gray-600 px-4 py-2 text-sm hover:bg-gray-800">
           Decline
-        </Button>
-        <Button onClick={() => setConsent("granted")}>Accept</Button>
+        </button>
+        <button class="rounded-md bg-white px-4 py-2 text-sm text-black hover:bg-gray-200">
+          Accept
+        </button>
       </div>
     </div>
   );
