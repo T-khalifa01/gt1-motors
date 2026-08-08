@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
+import { useRef, } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -12,22 +11,6 @@ if (typeof window !== "undefined") {
 
 export default function StorySection() {
   const textRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
-
-  // 1. Detect screen size safely on the client
-  useEffect(() => {
-    setHasMounted(true);
-
-    const checkScreenSize = () => {
-      // Tailwind's 'md' breakpoint is 768px
-      setIsMobile(window.innerWidth < 768); 
-    };
-
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
 
   // 2. Your GSAP Animation Logic remains exactly the same
   useGSAP(() => {
@@ -68,27 +51,18 @@ export default function StorySection() {
   return (
     <section id="realstory" className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-background">
       
-      {/* 3. Optimized Background Image (Mobile & Desktop conditionally loaded) */}
       <div className="absolute inset-0 z-0 bg-background">
-        {hasMounted && (
-          isMobile ? (
-            <Image
-              src="/redgt3-mobile.webp"
-              alt="Ahmed Wakil's red GT3 deliverd by GT1"
-              fill
-              className="object-cover object-center"
-              sizes="100vw"
-            />
-          ) : (
-            <Image
-              src="/redgt3-desk.webp"
-              alt="Ahmed Wakil's red GT3 deliverd by GT1"
-              fill
-              className="object-cover object-center"
-              sizes="100vw"
-            />
-          )
-        )}
+        <picture className="block h-full w-full">
+
+          <source media="(min-width: 768px)" srcSet="/redgt3-desk.webp" />
+          <img
+            src="/redgt3-mobile.webp"
+            alt="Ahmed El Wakil's red Porsche GT3 delivered by GT1 Motors"
+            className="h-full w-full object-cover object-center"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </div>
 
       {/* Text Content Container (Dark Glass Panel) */}

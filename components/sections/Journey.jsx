@@ -6,9 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 
-// Register ScrollTrigger safely
+// 1. FIX: Register ONLY ScrollTrigger (useGSAP is a React hook, not a plugin)
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+  gsap.config({ force3D: true });
 }
 
 export default function JourneySection() {
@@ -17,52 +18,52 @@ export default function JourneySection() {
 
   useGSAP(
     () => {
-      // Select all elements with the 'journey-panel' class inside this component
+      // Prevent mobile address bar show/hide from triggering heavy layout recalcs
+      ScrollTrigger.config({ ignoreMobileResize: true });
+
       const panels = gsap.utils.toArray(".journey-panel");
-      let lastPhase = -1;
 
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        onUpdate: (self) => {
-          const progress = self.progress;
-
-          // 1. Advance the red progress bar
-          if (progressRef.current) {
-            progressRef.current.style.width = `${progress * 100}%`;
-          }
-
-          // 2. Determine active phase (0, 1, or 2) based on scroll depth
-          const phase = Math.min(2, Math.floor(progress * 3));
-
-          // 3. Toggle CSS classes directly to avoid React re-renders on scroll
-          if (phase !== lastPhase) {
-            lastPhase = phase;
-            panels.forEach((panel, index) => {
-              if (index === phase) {
-                panel.classList.add("opacity-100", "translate-y-0", "pointer-events-auto");
-                panel.classList.remove("opacity-0", "translate-y-4", "pointer-events-none");
-              } else {
-                panel.classList.add("opacity-0", "translate-y-4", "pointer-events-none");
-                panel.classList.remove("opacity-100", "translate-y-0", "pointer-events-auto");
-              }
-            });
-          }
+      // Master ScrollTrigger timeline with requestAnimationFrame (rAF) smoothing
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.8, // Smooths out pixel jitter on mobile touch scrolling
+          fastScrollEnd: true,
         },
       });
+
+      // 1. Animate Progress Bar synchronously with scroll
+      tl.to(
+        progressRef.current,
+        {
+          width: "100%",
+          ease: "none",
+          duration: 3,
+        },
+        0
+      );
+
+      // 2. Smoothly crossfade Panels across the 3 acts
+      // Act 1 -> Act 2
+      tl.to(panels[0], { opacity: 0, y: -16, pointerEvents: "none", duration: 0.8, ease: "power1.inOut" }, 0.8)
+        .to(panels[1], { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.8, ease: "power1.inOut" }, 1.0)
+      
+      // Act 2 -> Act 3
+        .to(panels[1], { opacity: 0, y: -16, pointerEvents: "none", duration: 0.8, ease: "power1.inOut" }, 1.8)
+        .to(panels[2], { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.8, ease: "power1.inOut" }, 2.0);
     },
     { scope: containerRef }
   );
 
   return (
-    // Outer relative container controls the total scroll length (300vh for 3 acts)
     <section ref={containerRef} id="journey" className="relative h-[300vh] bg-background">
       
-      {/* Sticky Inner container pins to the viewport */}
-      <div className="sticky left-0 right-0 top-0 flex h-[100svh] items-center  overflow-hidden">
+      {/* Sticky Inner container pins to viewport */}
+      <div className="sticky left-0 right-0 top-0 flex h-[100svh] items-center overflow-hidden">
         
-        {/* 1. Optimized Next.js Background Image */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/bg-fluid.webp"
@@ -72,27 +73,21 @@ export default function JourneySection() {
             sizes="100vw"
           />
         </div>
-        
-        {/* <div className="absolute right-6 top-6 z-10 border border-dashed border-white/15 px-2.5 py-1.5 text-[0.55rem] uppercase tracking-[0.15em] text-white/20">
-          Dealership photo — background
-        </div> */}
 
-        {/* 2. Static Dark Scrim */}
+        {/* Static Dark Scrim */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/90" />
 
-        {/* 3. Text Panels */}
-        <div className="relative z-20 mx-auto w-full max-w-[980px] px-6 md:px-10 mt-[-100] md:mt-0">
+        {/* Text Panels */}
+        <div className="relative z-20 mx-auto -mt-[100px] w-full max-w-[980px] px-6 md:mt-0 md:px-10">
           <div className="relative min-h-[280px]">
             
             {/* Act 1 */}
-            <div className="journey-panel pointer-events-auto absolute inset-0 translate-y-0 opacity-100 transition-all duration-500 ease-out">
-              {/* Combined Heading */}
+            <div className="journey-panel will-change-[transform,opacity] pointer-events-auto absolute inset-0 translate-y-0 opacity-100">
               <h3 className="mb-1 font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold leading-[1.15] text-text-primary">
                 <span className="font-normal italic text-accent">It begins with a dream.</span><br />
                 Not What's Available.<br />What You Envision.
               </h3>
               
-              {/* Italicized Arabic Text */}
               <p className="mb-8 font-display text-[clamp(1rem,2.5vw,1.5rem)] italic text-text-primary/30" dir="rtl">
                 تحويل أحلامك إلى واقع
               </p>
@@ -111,15 +106,12 @@ export default function JourneySection() {
             </div>
 
             {/* Act 2 */}
-            <div className="journey-panel pointer-events-none absolute inset-0 translate-y-4 opacity-0 transition-all duration-500 ease-out">
-
-              {/* Combined Heading */}
+            <div className="journey-panel will-change-[transform,opacity] pointer-events-none absolute inset-0 translate-y-4 opacity-0">
               <h3 className="mb-1 font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold leading-[1.15] text-text-primary">
                 <span className="font-normal italic text-accent">Effortless ownership.</span><br />
                 The Only Thing Standing<br />In Your Way — Gone.
               </h3>
               
-              {/* Italicized Arabic Text */}
               <p className="mb-8 font-display text-[clamp(1rem,2.5vw,1.5rem)] italic text-text-primary/30" dir="rtl">
                 امتلاك بدون عناء
               </p>
@@ -141,15 +133,12 @@ export default function JourneySection() {
             </div>
 
             {/* Act 3 */}
-
-            <div className="journey-panel pointer-events-none absolute inset-0 translate-y-4 opacity-0 transition-all duration-500 ease-out">
-              {/* Combined Heading */}
+            <div className="journey-panel will-change-[transform,opacity] pointer-events-none absolute inset-0 translate-y-4 opacity-0">
               <h3 className="mb-1 font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold leading-[1.15] text-text-primary">
                 <span className="font-normal italic text-accent">Sit back and relax.</span><br />
                 And When It's Time<br />For a Change.
               </h3>
               
-              {/* Italicized Arabic Text */}
               <p className="mb-8 font-display text-[clamp(1rem,2.5vw,1.5rem)] italic text-text-primary/30" dir="rtl">
                 حين يحين وقت التغيير
               </p>
@@ -160,7 +149,6 @@ export default function JourneySection() {
                 </p>
               </div>
               
-              {/* Long Arabic Paragraph */}
               <p className="mt-3 max-w-[600px] font-display text-[0.85rem] italic leading-[1.85] text-text-primary/40" dir="rtl">
                 امتلاك سيارة الأحلام ليس حدثاً لمرة واحدة، بل علاقة مستمرة. حين يحين وقت التغيير، نتولى بيع سيارتك الحالية باحترافية — من العرض وحتى إتمام الصفقة.
               </p>
@@ -169,9 +157,9 @@ export default function JourneySection() {
           </div>
         </div>
 
-        {/* 4. Progress Bar */}
-        <div className="absolute bottom-16 md:bottom-8 left-6 right-6 z-20 h-[2px] bg-white/10 md:left-10 md:right-10">
-          <div ref={progressRef} className="h-full w-0 bg-accent transition-all duration-100 ease-linear" />
+        {/* Progress Bar */}
+        <div className="absolute bottom-16 left-6 right-6 z-20 h-[2px] bg-white/10 md:bottom-8 md:left-10 md:right-10">
+          <div ref={progressRef} className="will-change-[width] h-full w-0 bg-accent" />
         </div>
         
       </div>

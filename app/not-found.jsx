@@ -22,7 +22,7 @@ export default function NotFound() {
       <div className="flex flex-col gap-3 sm:flex-row">
         <Link
           href="/"
-          className="rounded-full border border-accent px-6 py-3 font-medium text-accent transition-opacity hover:opacity-90"
+          className="rounded-full border border-accent px-6 py-3 font-semibold text-accent transition-opacity hover:opacity-90"
         >
           Back to Homepage
         </Link>

@@ -90,7 +90,7 @@ export const metadata = buildMetadata(siteConfig);
 // --- REPLACE PER PROJECT: real font choice + real available weights ---
 const displayFont = Aleo({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
+  weight: ["400", "700"],
   style: ["normal", "italic"],
   variable: "--font-aleo",
   display: "swap",
@@ -98,7 +98,7 @@ const displayFont = Aleo({
 
 const bodyFont = Montserrat({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   variable: "--font-montserrat",
   display: "swap",
 });

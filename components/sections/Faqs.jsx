@@ -73,7 +73,7 @@ export default function FaqSection() {
                   aria-expanded={isOpen}
                 >
                   <div className="flex flex-col gap-1">
-                    <span className="text-[0.85rem] font-medium text-text-primary">
+                    <span className="text-[0.85rem] font-semibold text-text-primary">
                       {faq.qEn}
                     </span>
                     <span className="font-display text-[0.78rem] italic text-text-primary/35" dir="rtl">

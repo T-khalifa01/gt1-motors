@@ -1,3 +1,6 @@
+
+
+
 export default function AboutSection() {
   return (
     <section id="about" className="relative bg-background px-6 py-[4.5rem] md:px-10 md:py-24">
@@ -19,9 +22,6 @@ export default function AboutSection() {
           <p className="mb-5 font-display text-[clamp(1.15rem,2.6vw,1.5rem)] italic leading-[1.6] text-text-primary/90">
             <span className="font-bold not-italic text-accent">"</span>There are cars you like, and then there's that one car that feels like it was made just for you. That's why at <span className="font-bold not-italic">GT</span><span className="text-accent font-bold not-italic">1</span> Motors, we bring you closer to the car of your dreams. From importing it from abroad to its arrival at the port, every single detail is handled to deliver nothing but the best — right up until you see it standing in front of you in the showroom. Every step is carefully calculated. At <span className="font-bold not-italic">GT</span><span className="text-accent font-bold not-italic">1</span> Motors, we turn your dream car into a reality.
           </p>
-          {/* <p className="mb-5 font-display text-[clamp(1.15rem,2.6vw,1.5rem)] italic leading-[1.6] text-text-primary/90">
-            <span className="font-bold not-italic text-accent">"</span>There are cars you like, and then there's that one car that feels like it was made just for you. That's why at <span className="font-bold not-italic tracking-wider">GT<span className="text-accent">1</span> MOTORS</span>, we bring you closer to the car of your dreams. From importing it from abroad to its arrival at the port, every single detail is handled to deliver nothing but the best — right up until you see it standing in front of you in the showroom. Every step is carefully calculated. At <span className="font-bold not-italic tracking-wider">GT<span className="text-accent">1</span> MOTORS</span>, we turn your dream car into a reality.
-          </p> */}
           
           {/* AR Quote */}
           <p className="mb-6 font-display text-[clamp(1.05rem,2.3vw,1.3rem)] italic leading-[1.9] text-text-primary/40" dir="rtl">

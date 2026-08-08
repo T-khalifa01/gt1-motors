@@ -1,3 +1,5 @@
+
+
 export default function ReviewsSection() {
   return (
     <section className="relative bg-secondary px-6 py-[4.5rem] md:px-10 md:py-24">
@@ -27,7 +29,7 @@ export default function ReviewsSection() {
               "It's not just a car! It's a whole experience!"
             </p>
             <p className="text-[0.74rem] font-bold uppercase tracking-[0.08em] text-text-primary">Sarah Hany</p>
-            <p className="mt-1 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-[#696E81]">Instagram</p>
+            <p className="mt-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-[#696E81]">Instagram</p>
           </div>
 
           {/* Card 2 */}
@@ -40,7 +42,7 @@ export default function ReviewsSection() {
               "Masterpieces."
             </p>
             <p className="text-[0.74rem] font-bold uppercase tracking-[0.08em] text-text-primary">Mohamed Hassan</p>
-            <p className="mt-1 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-[#696E81]">Google Maps</p>
+            <p className="mt-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-[#696E81]">Google Maps</p>
           </div>
 
           {/* Card 3 */}
@@ -53,7 +55,7 @@ export default function ReviewsSection() {
               "معرض سيارات على مستوى عالي جدا"
             </p>
             <p className="text-[0.74rem] font-bold uppercase tracking-[0.08em] text-text-primary">Hashim Masei</p>
-            <p className="mt-1 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-[#696E81]">Google Maps</p>
+            <p className="mt-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-[#696E81]">Google Maps</p>
             
             {/* Local Guide Badge */}
             <p className="mt-2.5 inline-flex items-center gap-1.5 text-[0.6rem] tracking-[0.04em] text-text-primary/40">

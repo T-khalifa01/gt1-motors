@@ -42,7 +42,7 @@ const Input = forwardRef(function Input(
         {...props}
       />
       {error && (
-        <span id={`${fieldId}-error`} className="text-[0.7rem] font-medium text-red-500">
+        <span id={`${fieldId}-error`} className="text-[0.7rem] font-semibold text-red-500">
           {error}
         </span>
       )}

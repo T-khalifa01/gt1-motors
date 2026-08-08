@@ -164,7 +164,7 @@ export default function Contact() {
                 </div>
 
                 {errors.interestedIn && (
-                  <span className="text-[0.7rem] font-medium text-red-500">
+                  <span className="text-[0.7rem] font-semibold text-red-500">
                     {errors.interestedIn.message}
                   </span>
                 )}
@@ -189,7 +189,7 @@ export default function Contact() {
                 />
               </div>
 
-              {submitError && <p className="text-[0.7rem] font-medium text-red-500">{submitError}</p>}
+              {submitError && <p className="text-[0.7rem] font-semibold text-red-500">{submitError}</p>}
 
               <Button type="submit" loading={isSubmitting} className="mt-2 w-full">
                 Send Enquiry →
