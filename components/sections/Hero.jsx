@@ -1,4 +1,4 @@
-
+"use client";
 
 import WhatsAppButton from "../ui/WhatsAppButton";
 import Image from "next/image";
