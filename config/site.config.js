@@ -109,7 +109,7 @@ const siteConfig = {
   // ==================================================================
   seo: {
     title: "GT1 Motors",
-    description: "Short SEO meta description, 150-160 characters ideally.",
+    description: "GT1 MOTORS A style that goes the extra mile — where luxury meets performance, and every experiance spells excellence.",
     keywords: ["car Imports", "premium dealership zayed", "exotic cars", "performance cars"],
     siteUrl: "https://www.dealership-domain.com", // No trailing slash
     ogImage: "/og-image.jpg", // Path in /public, 1200x630 recommended
